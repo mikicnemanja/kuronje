@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #9 - Prcko",
+  "description": "Prcko is a epic Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/prcko.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Prcko"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Void Realm"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Axe"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    }
+  ]
+}

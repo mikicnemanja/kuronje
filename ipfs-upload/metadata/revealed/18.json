@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #18 - Doza",
+  "description": "Doza is a rare Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/doza.jpeg",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Doza"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Lightning Spear"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    }
+  ]
+}

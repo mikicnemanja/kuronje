@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #0 - Nemanja",
+  "description": "Nemanja is a legendary Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/nemanja.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Nemanja"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Ancient Temple"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Golden"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Fire Staff"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    }
+  ]
+}

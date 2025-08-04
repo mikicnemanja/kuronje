@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #3 - Paja",
+  "description": "Paja is a rare Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/paja.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Paja"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Neon City"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Silver"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Dagger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #28 - Djole",
+  "description": "Djole is a epic Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/djole.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Djole"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Void Realm"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Lightning Spear"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    }
+  ]
+}

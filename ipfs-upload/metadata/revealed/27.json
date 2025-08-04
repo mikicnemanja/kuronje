@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #27 - Dondur",
+  "description": "Dondur is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/dondur.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Dondur"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Ancient Temple"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Silver"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Ice Bow"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

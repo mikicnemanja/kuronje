@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #21 - Jova",
+  "description": "Jova is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/jova.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Jova"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Dark Forest"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Silver"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Lightning Spear"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

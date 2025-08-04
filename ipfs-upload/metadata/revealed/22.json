@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #22 - Kozma",
+  "description": "Kozma is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/kozma.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Kozma"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Green"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Dagger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Kuronje Mystery Box",
+  "description": "A mysterious Kuronje waiting to be revealed. Each box contains a unique character with special traits and abilities. Reveal your Kuronje to discover its true identity!",
+  "image": "ipfs://bafybeieojdgder5cspeumewljknzhv2hkqbjbcgv5sw4adosgva43b7bbq",
+  "attributes": [
+    {
+      "trait_type": "Status",
+      "value": "Unrevealed"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Mystery"
+    }
+  ]
+}

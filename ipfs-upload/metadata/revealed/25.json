@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #25 - Moki",
+  "description": "Moki is a uncommon Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/moki.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Moki"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Neon City"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ice Blue"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Shadow Blade"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Uncommon"
+    }
+  ]
+}

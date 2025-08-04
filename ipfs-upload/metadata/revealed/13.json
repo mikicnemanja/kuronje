@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #13 - Petra",
+  "description": "Petra is a epic Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/petra.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Petra"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Mystic Cave"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Ice Bow"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #24 - Sindza",
+  "description": "Sindza is a epic Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/sindza.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Sindza"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Green"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Ice Bow"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    }
+  ]
+}

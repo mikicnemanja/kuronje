@@ -1,0 +1,272 @@
+[
+  {
+    "id": 0,
+    "name": "Nemanja",
+    "background": "Ancient Temple",
+    "eyes": "Golden",
+    "weapon": "Fire Staff",
+    "rarity": "Legendary",
+    "aiPrompt": "Serbian fuckboy named Nemanja, ancient temple, golden eyes, holding fire staff, legendary rarity character"
+  },
+  {
+    "id": 1,
+    "name": "Zeka",
+    "background": "Mystic Cave",
+    "eyes": "Glowing Red",
+    "weapon": "Axe",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Zeka, mystic cave, glowing red eyes, holding axe, uncommon rarity character"
+  },
+  {
+    "id": 2,
+    "name": "Maksa",
+    "background": "Dark Forest",
+    "eyes": "Ice Blue",
+    "weapon": "Dagger",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Maksa, dark forest, ice blue eyes, holding dagger, uncommon rarity character"
+  },
+  {
+    "id": 3,
+    "name": "Paja",
+    "background": "Neon City",
+    "eyes": "Silver",
+    "weapon": "Dagger",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Paja, neon city, silver eyes, holding dagger, rare rarity character"
+  },
+  {
+    "id": 4,
+    "name": "Pedja",
+    "background": "Void Realm",
+    "eyes": "Silver",
+    "weapon": "Ice Bow",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Pedja, void realm, silver eyes, holding ice bow, common rarity character"
+  },
+  {
+    "id": 5,
+    "name": "Punisa",
+    "background": "Neon City",
+    "eyes": "Ice Blue",
+    "weapon": "Dagger",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Punisa, neon city, ice blue eyes, holding dagger, rare rarity character"
+  },
+  {
+    "id": 6,
+    "name": "Stupar",
+    "background": "Desert",
+    "eyes": "Green",
+    "weapon": "Dagger",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Stupar, desert, green eyes, holding dagger, rare rarity character"
+  },
+  {
+    "id": 7,
+    "name": "Garic",
+    "background": "Desert",
+    "eyes": "Ice Blue",
+    "weapon": "Dagger",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Garic, desert, ice blue eyes, holding dagger, uncommon rarity character"
+  },
+  {
+    "id": 8,
+    "name": "Cile",
+    "background": "Mystic Cave",
+    "eyes": "Ice Blue",
+    "weapon": "Lightning Spear",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Cile, mystic cave, ice blue eyes, holding lightning spear, common rarity character"
+  },
+  {
+    "id": 9,
+    "name": "Prcko",
+    "background": "Void Realm",
+    "eyes": "Purple",
+    "weapon": "Axe",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Prcko, void realm, purple eyes, holding axe, epic rarity character"
+  },
+  {
+    "id": 10,
+    "name": "Marko",
+    "background": "Void Realm",
+    "eyes": "Purple",
+    "weapon": "Fire Staff",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Marko, void realm, purple eyes, holding fire staff, uncommon rarity character"
+  },
+  {
+    "id": 11,
+    "name": "Cinc",
+    "background": "Desert",
+    "eyes": "Golden",
+    "weapon": "Fire Staff",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Cinc, desert, golden eyes, holding fire staff, epic rarity character"
+  },
+  {
+    "id": 12,
+    "name": "Dokic",
+    "background": "Ancient Temple",
+    "eyes": "Purple",
+    "weapon": "Dagger",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Dokic, ancient temple, purple eyes, holding dagger, uncommon rarity character"
+  },
+  {
+    "id": 13,
+    "name": "Petra",
+    "background": "Mystic Cave",
+    "eyes": "Purple",
+    "weapon": "Ice Bow",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Petra, mystic cave, purple eyes, holding ice bow, epic rarity character"
+  },
+  {
+    "id": 14,
+    "name": "Salica",
+    "background": "Desert",
+    "eyes": "Ice Blue",
+    "weapon": "Shadow Blade",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Salica, desert, ice blue eyes, holding shadow blade, rare rarity character"
+  },
+  {
+    "id": 15,
+    "name": "Moca",
+    "background": "Void Realm",
+    "eyes": "Golden",
+    "weapon": "Axe",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Moca, void realm, golden eyes, holding axe, epic rarity character"
+  },
+  {
+    "id": 16,
+    "name": "Gliga",
+    "background": "Desert",
+    "eyes": "Glowing Red",
+    "weapon": "Axe",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Gliga, desert, glowing red eyes, holding axe, common rarity character"
+  },
+  {
+    "id": 17,
+    "name": "Raka",
+    "background": "Desert",
+    "eyes": "Purple",
+    "weapon": "Lightning Spear",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Raka, desert, purple eyes, holding lightning spear, common rarity character"
+  },
+  {
+    "id": 18,
+    "name": "Doza",
+    "background": "Desert",
+    "eyes": "Purple",
+    "weapon": "Lightning Spear",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Doza, desert, purple eyes, holding lightning spear, rare rarity character"
+  },
+  {
+    "id": 19,
+    "name": "Dimitrije",
+    "background": "Neon City",
+    "eyes": "Green",
+    "weapon": "Fire Staff",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Dimitrije, neon city, green eyes, holding fire staff, uncommon rarity character"
+  },
+  {
+    "id": 20,
+    "name": "Seba",
+    "background": "Ancient Temple",
+    "eyes": "Ice Blue",
+    "weapon": "Ice Bow",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Seba, ancient temple, ice blue eyes, holding ice bow, common rarity character"
+  },
+  {
+    "id": 21,
+    "name": "Jova",
+    "background": "Dark Forest",
+    "eyes": "Silver",
+    "weapon": "Lightning Spear",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Jova, dark forest, silver eyes, holding lightning spear, common rarity character"
+  },
+  {
+    "id": 22,
+    "name": "Kozma",
+    "background": "Desert",
+    "eyes": "Green",
+    "weapon": "Dagger",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Kozma, desert, green eyes, holding dagger, common rarity character"
+  },
+  {
+    "id": 23,
+    "name": "Obi",
+    "background": "Dark Forest",
+    "eyes": "Ice Blue",
+    "weapon": "Fire Staff",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Obi, dark forest, ice blue eyes, holding fire staff, uncommon rarity character"
+  },
+  {
+    "id": 24,
+    "name": "Sindza",
+    "background": "Desert",
+    "eyes": "Green",
+    "weapon": "Ice Bow",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Sindza, desert, green eyes, holding ice bow, epic rarity character"
+  },
+  {
+    "id": 25,
+    "name": "Moki",
+    "background": "Neon City",
+    "eyes": "Ice Blue",
+    "weapon": "Shadow Blade",
+    "rarity": "Uncommon",
+    "aiPrompt": "Serbian fuckboy named Moki, neon city, ice blue eyes, holding shadow blade, uncommon rarity character"
+  },
+  {
+    "id": 26,
+    "name": "Djuraga",
+    "background": "Neon City",
+    "eyes": "Green",
+    "weapon": "Shadow Blade",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Djuraga, neon city, green eyes, holding shadow blade, rare rarity character"
+  },
+  {
+    "id": 27,
+    "name": "Dondur",
+    "background": "Ancient Temple",
+    "eyes": "Silver",
+    "weapon": "Ice Bow",
+    "rarity": "Common",
+    "aiPrompt": "Serbian fuckboy named Dondur, ancient temple, silver eyes, holding ice bow, common rarity character"
+  },
+  {
+    "id": 28,
+    "name": "Djole",
+    "background": "Void Realm",
+    "eyes": "Purple",
+    "weapon": "Lightning Spear",
+    "rarity": "Epic",
+    "aiPrompt": "Serbian fuckboy named Djole, void realm, purple eyes, holding lightning spear, epic rarity character"
+  },
+  {
+    "id": 29,
+    "name": "Liza",
+    "background": "Ancient Temple",
+    "eyes": "Golden",
+    "weapon": "Axe",
+    "rarity": "Rare",
+    "aiPrompt": "Serbian fuckboy named Liza, ancient temple, golden eyes, holding axe, rare rarity character"
+  }
+]

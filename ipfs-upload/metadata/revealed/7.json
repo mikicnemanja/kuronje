@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #7 - Garic",
+  "description": "Garic is a uncommon Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/garic.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Garic"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ice Blue"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Dagger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Uncommon"
+    }
+  ]
+}

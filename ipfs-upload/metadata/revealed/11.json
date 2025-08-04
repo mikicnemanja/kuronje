@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #11 - Cinc",
+  "description": "Cinc is a epic Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/cinc.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Cinc"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Golden"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Fire Staff"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    }
+  ]
+}

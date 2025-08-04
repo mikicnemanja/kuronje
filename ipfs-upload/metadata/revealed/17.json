@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #17 - Raka",
+  "description": "Raka is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/raka.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Raka"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Lightning Spear"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

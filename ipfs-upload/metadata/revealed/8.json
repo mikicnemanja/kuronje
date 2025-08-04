@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #8 - Cile",
+  "description": "Cile is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/cile.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Cile"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Mystic Cave"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ice Blue"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Lightning Spear"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

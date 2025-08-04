@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #12 - Dokic",
+  "description": "Dokic is a uncommon Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/dokic.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Dokic"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Ancient Temple"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Dagger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Uncommon"
+    }
+  ]
+}

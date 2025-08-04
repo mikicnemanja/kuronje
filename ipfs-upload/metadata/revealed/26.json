@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #26 - Djuraga",
+  "description": "Djuraga is a rare Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/djuraga.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Djuraga"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Neon City"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Green"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Shadow Blade"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #16 - Gliga",
+  "description": "Gliga is a common Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/gliga.png",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Gliga"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glowing Red"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Axe"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

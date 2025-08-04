@@ -1,0 +1,27 @@
+{
+  "name": "Kuronje #2 - Maksa",
+  "description": "Maksa is a uncommon Kuronje with unique abilities",
+  "image": "ipfs://bafybeig5esiicys2hdcv56gslmvp5rufpwqwduixnmc76j2blvfl6jbb5y/maksa.jpeg",
+  "attributes": [
+    {
+      "trait_type": "Name",
+      "value": "Maksa"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Dark Forest"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Ice Blue"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Dagger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Uncommon"
+    }
+  ]
+}
