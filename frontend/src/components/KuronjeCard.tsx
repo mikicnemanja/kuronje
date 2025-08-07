@@ -101,8 +101,7 @@ export default function KuronjeCard({
         backdropFilter: "blur(12px)",
         border: "1px solid rgba(255, 255, 255, 0.25)",
         overflow: "hidden",
-        transition:
-          "transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease",
+        transition: "transform 0.1s ease, background-color 0.1s ease",
         cursor: "pointer",
       }}
       onMouseEnter={(e) => {

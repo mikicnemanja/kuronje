@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import { useState, useCallback, useEffect } from "react";
 import KuronjeNFTABI from "./abi.json";
-import contractAddressData from "./contract-address.json";
+import contractAddressData from "../../contracts/contract-address.json";
 
 const contractAddress = contractAddressData.contractAddress as `0x${string}`;
 

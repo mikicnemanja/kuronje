@@ -27,9 +27,9 @@ contract GetLatestDeployment is Script {
             )
         );
 
-        vm.writeFile("./frontend/src/contract-address.json", json);
+        vm.writeFile("./contracts/contract-address.json", json);
         console.log(
-            "Contract address written to frontend/src/contract-address.json"
+            "Contract address written to contracts/contract-address.json"
         );
     }
 }

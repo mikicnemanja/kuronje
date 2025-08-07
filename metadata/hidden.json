@@ -1,6 +1,0 @@
-{
-  "name": "Kuronje Mystery Box",
-  "description": "A mysterious Kuronje waiting to be revealed...",
-  "image": "ipfs://QmHiddenImageHash",
-  "attributes": [{ "trait_type": "Status", "value": "Unrevealed" }]
-}

@@ -1,7 +1,0 @@
-Kuronje #22 - Kozma
-Background: Desert
-Eyes: Green
-Weapon: Dagger
-Rarity: Common
-
-AI Prompt: Serbian fuckboy named Kozma, desert, green eyes, holding dagger, common rarity character

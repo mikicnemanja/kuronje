@@ -11,6 +11,7 @@ contract KuronjeNFT is ERC721, Ownable {
 
     error KuronjeNFT__NotTokenOwner();
     error KuronjeNFT__TokenAlreadyRevealed();
+    error KuronjeNFT__CollectionSoldOut();
 
     uint256 public constant COLLECTION_SIZE = 20;
     string public constant UNREVEALED_URI =
@@ -23,10 +24,30 @@ contract KuronjeNFT is ERC721, Ownable {
     mapping(uint256 => bool) public s_tokenIdRevealed;
     mapping(uint256 => uint256) public s_tokenIdToMetadataId;
 
+    // Events for better indexing
+    event TokenMinted(
+        address indexed to,
+        uint256 indexed tokenId,
+        uint256 indexed metadataId,
+        uint256 timestamp
+    );
+
+    event TokenRevealed(
+        uint256 indexed tokenId,
+        uint256 indexed metadataId,
+        address indexed revealer,
+        uint256 timestamp
+    );
+
     constructor() ERC721("Kuronje", "KRNJ") Ownable(msg.sender) {
         s_totalTokenAmount = 0;
     }
+
     function mintNft() public {
+        if (s_totalTokenAmount >= COLLECTION_SIZE) {
+            revert KuronjeNFT__CollectionSoldOut();
+        }
+
         uint256 tokenId = s_totalTokenAmount;
 
         // Pseudo-random metadata assignment
@@ -44,6 +65,13 @@ contract KuronjeNFT is ERC721, Ownable {
         s_tokenIdToMetadataId[tokenId] = randomMetadataId;
         _mint(msg.sender, tokenId);
         s_totalTokenAmount++;
+
+        emit TokenMinted(
+            msg.sender,
+            tokenId,
+            randomMetadataId,
+            block.timestamp
+        );
     }
 
     function tokenURI(
@@ -70,6 +98,82 @@ contract KuronjeNFT is ERC721, Ownable {
         if (ownerOf(tokenId) != msg.sender) revert KuronjeNFT__NotTokenOwner();
         if (s_tokenIdRevealed[tokenId])
             revert KuronjeNFT__TokenAlreadyRevealed();
+
         s_tokenIdRevealed[tokenId] = true;
+
+        emit TokenRevealed(
+            tokenId,
+            s_tokenIdToMetadataId[tokenId],
+            msg.sender,
+            block.timestamp
+        );
+    }
+
+    // View functions for better frontend integration
+    function getTokenMetadataId(
+        uint256 tokenId
+    ) external view returns (uint256) {
+        _requireOwned(tokenId);
+        return s_tokenIdToMetadataId[tokenId];
+    }
+
+    function isTokenRevealed(uint256 tokenId) external view returns (bool) {
+        _requireOwned(tokenId);
+        return s_tokenIdRevealed[tokenId];
+    }
+
+    function getTotalSupply() external view returns (uint256) {
+        return s_totalTokenAmount;
+    }
+
+    function getRemainingSupply() external view returns (uint256) {
+        return COLLECTION_SIZE - s_totalTokenAmount;
+    }
+
+    // Batch view functions for frontend efficiency
+    function getTokensByOwner(
+        address owner
+    ) external view returns (uint256[] memory) {
+        uint256 tokenCount = balanceOf(owner);
+        uint256[] memory tokenIds = new uint256[](tokenCount);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < s_totalTokenAmount; i++) {
+            if (ownerOf(i) == owner) {
+                tokenIds[index] = i;
+                index++;
+            }
+        }
+
+        return tokenIds;
+    }
+
+    function getTokensInfoByOwner(
+        address owner
+    )
+        external
+        view
+        returns (
+            uint256[] memory tokenIds,
+            uint256[] memory metadataIds,
+            bool[] memory revealedStatus
+        )
+    {
+        uint256 tokenCount = balanceOf(owner);
+        tokenIds = new uint256[](tokenCount);
+        metadataIds = new uint256[](tokenCount);
+        revealedStatus = new bool[](tokenCount);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < s_totalTokenAmount; i++) {
+            if (ownerOf(i) == owner) {
+                tokenIds[index] = i;
+                metadataIds[index] = s_tokenIdToMetadataId[i];
+                revealedStatus[index] = s_tokenIdRevealed[i];
+                index++;
+            }
+        }
+
+        return (tokenIds, metadataIds, revealedStatus);
     }
 }
