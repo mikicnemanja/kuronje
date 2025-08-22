@@ -26,6 +26,9 @@ deploy-local:
 	@make build
 	@forge script script/DeployKuronjeNFT.s.sol:DeployKuronjeNFT --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
 	@make update-frontend-address
+	@echo "🗑️  Clearing Ponder cache for new deployment..."
+	@rm -rf ponder/.ponder 2>/dev/null || true
+	@echo "✅ Ponder cache cleared!"
 
 # Update frontend with latest contract address and ABI
 update-frontend-address:
