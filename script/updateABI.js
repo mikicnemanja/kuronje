@@ -26,11 +26,15 @@ function updateABI() {
       console.log("📁 Created contracts directory");
     }
 
-    // Generate ABI (JSON format)
-    const abiContent = JSON.stringify(abi, null, 2);
+    // Generate ABI as TypeScript constant export
+    const abiContent = `export const KuronjeNFTABI = ${JSON.stringify(
+      abi,
+      null,
+      2
+    )} as const;`;
 
-    fs.writeFileSync(path.join(contractsDir, "KuronjeABI.json"), abiContent);
-    console.log("✅ ABI updated: contracts/KuronjeABI.json");
+    fs.writeFileSync(path.join(contractsDir, "KuronjeNFTABI.ts"), abiContent);
+    console.log("✅ ABI updated: contracts/KuronjeNFTABI.ts");
 
     // Generate ABI summary for verification
     const summary = {

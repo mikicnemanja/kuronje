@@ -1,33 +1,99 @@
 import { ponder } from "ponder:registry";
 import schema from "ponder:schema";
 
+// Handle Transfer events (includes mints when from = 0x0 and burns when to = 0x0)
 ponder.on("KuronjeNFT:Transfer", async ({ event, context }) => {
-  // Create an Account for the sender, or update the balance if it already exists.
+  const { from, to, tokenId } = event.args;
+
+  // Create accounts if they don't exist
   await context.db
     .insert(schema.account)
-    .values({ address: event.args.from })
+    .values({ address: from })
     .onConflictDoNothing();
-  // Create an Account for the recipient, or update the balance if it already exists.
+
   await context.db
     .insert(schema.account)
-    .values({ address: event.args.to })
+    .values({ address: to })
     .onConflictDoNothing();
 
-  // Create or update a Token.
-  await context.db
-    .insert(schema.token)
-    .values({
-      id: event.args.tokenId,
-      owner: event.args.to,
-    })
-    .onConflictDoUpdate({ owner: event.args.to });
+  // Update token ownership (only for existing tokens, mints are handled by TokenMinted event)
+  if (from !== "0x0000000000000000000000000000000000000000") {
+    await context.db.update(schema.token, { id: tokenId }).set({ owner: to });
 
-  // Create a TransferEvent.
+    // Update token counts
+    await context.db
+      .update(schema.account, { address: from })
+      .set({ tokenCount: context.db.sql`token_count - 1` });
+
+    await context.db
+      .update(schema.account, { address: to })
+      .set({ tokenCount: context.db.sql`token_count + 1` });
+  }
+
+  // Record transfer event
   await context.db.insert(schema.transferEvent).values({
-    id: event.id,
-    from: event.args.from,
-    to: event.args.to,
-    token: event.args.tokenId,
+    id: event.log.id,
+    from,
+    to,
+    tokenId,
     timestamp: Number(event.block.timestamp),
+  });
+});
+
+// Handle TokenMinted events
+ponder.on("KuronjeNFT:TokenMinted", async ({ event, context }) => {
+  const { to, tokenId, metadataId, timestamp } = event.args;
+
+  // Create account if it doesn't exist
+  await context.db
+    .insert(schema.account)
+    .values({ address: to })
+    .onConflictDoNothing();
+
+  // Create the token record
+  await context.db.insert(schema.token).values({
+    id: tokenId,
+    owner: to,
+    metadataId,
+    isRevealed: false,
+    mintedAt: Number(timestamp),
+  });
+
+  // Update account token count
+  await context.db
+    .update(schema.account, { address: to })
+    .set({ tokenCount: context.db.sql`token_count + 1` });
+
+  // Record mint event
+  await context.db.insert(schema.mintEvent).values({
+    id: event.log.id,
+    to,
+    tokenId,
+    metadataId,
+    timestamp: Number(timestamp),
+    blockTimestamp: Number(event.block.timestamp),
+  });
+});
+
+// Handle TokenRevealed events
+ponder.on("KuronjeNFT:TokenRevealed", async ({ event, context }) => {
+  const { tokenId, metadataId, revealer, timestamp } = event.args;
+
+  // Update the token's reveal status
+  await context.db.update(schema.token, { id: tokenId }).set({
+    isRevealed: true,
+    revealedBy: revealer,
+    revealedAt: Number(timestamp),
+    metadataId, // Update metadata ID in case it changed during reveal
+  });
+
+  // Record reveal event
+  await context.db.insert(schema.revealEvent).values({
+    id: event.log.id,
+    tokenId,
+    metadataId,
+    revealer,
+    timestamp: Number(timestamp),
+    blockTimestamp: Number(event.block.timestamp),
   });
 });

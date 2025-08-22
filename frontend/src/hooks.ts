@@ -5,8 +5,9 @@ import {
   usePublicClient,
 } from "wagmi";
 import { useState, useCallback, useEffect } from "react";
-import KuronjeNFTABI from "./abi.json";
+
 import contractAddressData from "../../contracts/contract-address.json";
+import { KuronjeNFTABI } from "../../contracts/KuronjeNFTABI";
 
 const contractAddress = contractAddressData.contractAddress as `0x${string}`;
 
@@ -66,7 +67,7 @@ export const useKuronjeBalance = (userAddress?: `0x${string}`) => {
     address: contractAddress,
     abi: KuronjeNFTABI,
     functionName: "balanceOf",
-    args: [userAddress],
+    args: [userAddress!],
     query: {
       enabled: !!userAddress,
     },
@@ -86,7 +87,7 @@ export const useTokenOwner = (tokenId: number, enabled = true) => {
     address: contractAddress,
     abi: KuronjeNFTABI,
     functionName: "ownerOf",
-    args: [tokenId],
+    args: [BigInt(tokenId)],
     query: {
       enabled: enabled && tokenId !== undefined,
     },
@@ -98,7 +99,7 @@ export const useIsTokenRevealed = (tokenId: number, enabled = true) => {
     address: contractAddress,
     abi: KuronjeNFTABI,
     functionName: "s_tokenIdRevealed",
-    args: [tokenId],
+    args: [BigInt(tokenId)],
     query: {
       enabled: enabled && tokenId !== undefined,
     },
@@ -110,7 +111,7 @@ export const useTokenMetadataId = (tokenId: number, enabled = true) => {
     address: contractAddress,
     abi: KuronjeNFTABI,
     functionName: "s_tokenIdToMetadataId",
-    args: [tokenId],
+    args: [BigInt(tokenId)],
     query: {
       enabled: enabled && tokenId !== undefined,
     },
@@ -184,7 +185,7 @@ export const useRevealToken = () => {
           address: contractAddress,
           abi: KuronjeNFTABI,
           functionName: "revealToken",
-          args: [tokenId],
+          args: [BigInt(tokenId)],
         },
         {
           onError: (error) => {
@@ -247,7 +248,7 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
             address: contractAddress,
             abi: KuronjeNFTABI,
             functionName: "ownerOf",
-            args: [i],
+            args: [BigInt(i)],
           })) as string;
 
           if (owner && owner.toLowerCase() === userAddress.toLowerCase()) {
@@ -258,7 +259,7 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
               address: contractAddress,
               abi: KuronjeNFTABI,
               functionName: "s_tokenIdRevealed",
-              args: [i],
+              args: [BigInt(i)],
             })) as boolean;
 
             // Get the tokenURI from smart contract
@@ -266,7 +267,7 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
               address: contractAddress,
               abi: KuronjeNFTABI,
               functionName: "tokenURI",
-              args: [i],
+              args: [BigInt(i)],
             })) as string;
 
             console.log(`Token ${i} URI:`, tokenURI);

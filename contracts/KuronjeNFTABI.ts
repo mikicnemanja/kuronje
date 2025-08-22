@@ -1,4 +1,4 @@
-[
+export const KuronjeNFTABI = [
   {
     "type": "constructor",
     "inputs": [],
@@ -810,4 +810,4 @@
       }
     ]
   }
-]
+] as const;
