@@ -23,16 +23,16 @@ ponder.on("KuronjeNFT:Transfer", async ({ event, context }) => {
     // Update token counts
     await context.db
       .update(schema.account, { address: from })
-      .set({ tokenCount: context.db.sql`token_count - 1` });
+      .set((row) => ({ tokenCount: row.tokenCount - 1 }));
 
     await context.db
       .update(schema.account, { address: to })
-      .set({ tokenCount: context.db.sql`token_count + 1` });
+      .set((row) => ({ tokenCount: row.tokenCount + 1 }));
   }
 
   // Record transfer event
   await context.db.insert(schema.transferEvent).values({
-    id: event.log.id,
+    id: event.id,
     from,
     to,
     tokenId,
@@ -62,11 +62,11 @@ ponder.on("KuronjeNFT:TokenMinted", async ({ event, context }) => {
   // Update account token count
   await context.db
     .update(schema.account, { address: to })
-    .set({ tokenCount: context.db.sql`token_count + 1` });
+    .set((row) => ({ tokenCount: row.tokenCount + 1 }));
 
   // Record mint event
   await context.db.insert(schema.mintEvent).values({
-    id: event.log.id,
+    id: event.id,
     to,
     tokenId,
     metadataId,
@@ -89,7 +89,7 @@ ponder.on("KuronjeNFT:TokenRevealed", async ({ event, context }) => {
 
   // Record reveal event
   await context.db.insert(schema.revealEvent).values({
-    id: event.log.id,
+    id: event.id,
     tokenId,
     metadataId,
     revealer,
