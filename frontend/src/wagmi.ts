@@ -9,7 +9,18 @@ export const config = getDefaultConfig({
       name: "Anvil",
       nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
       rpcUrls: {
-        default: { http: ["http://localhost:8545"] },
+        default: {
+          http: ["http://localhost:8545"],
+          // Development settings for better nonce handling
+          batch: {
+            multicall: false, // Disable batching for development
+          },
+          retryCount: 1, // Fewer retries for faster feedback
+        },
+      },
+      // Add block time for better nonce handling
+      blockExplorers: {
+        default: { name: "Local", url: "http://localhost:8545" },
       },
     },
     {
@@ -21,4 +32,13 @@ export const config = getDefaultConfig({
       },
     },
   ],
+  // Add better connection handling
+  multiInjectedProviderDiscovery: false,
+  pollingInterval: 2000, // Faster polling for development (2 seconds)
+  // Ensure fresh data fetching
+  syncConnectedChain: true,
+  // Development-friendly settings
+  ...(process.env.NODE_ENV === "development" && {
+    cacheTime: 1000, // Shorter cache time in development
+  }),
 });

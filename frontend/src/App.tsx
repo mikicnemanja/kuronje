@@ -1,5 +1,7 @@
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   useMintKuronje,
   useRevealToken,
@@ -9,6 +11,89 @@ import {
 import BitcoinCursorFollower from "./components/BitcoinCursorFollower";
 import KuronjeCard from "./components/KuronjeCard";
 
+// Development Reset Component
+const DevResetButton = () => {
+  const queryClient = useQueryClient();
+  const { disconnect } = useDisconnect();
+
+  const handleReset = () => {
+    console.log("🔄 Resetting frontend cache...");
+
+    // Clear all wagmi/react-query cache
+    queryClient.clear();
+
+    // Disconnect wallet to force fresh connection
+    disconnect();
+
+    // Clear any local storage that might cache nonces
+    try {
+      localStorage.removeItem("wagmi.cache");
+      localStorage.removeItem("wagmi.store");
+      sessionStorage.clear(); // Also clear session storage
+    } catch {
+      console.log("No local storage to clear");
+    }
+
+    console.log("✅ Frontend reset complete - please reconnect wallet");
+
+    // More helpful alert with instructions
+    alert(`🔄 Frontend cache cleared!
+
+📋 IMPORTANT: Also reset your wallet:
+
+MetaMask:
+1. Open MetaMask
+2. Settings → Advanced
+3. Click "Reset Account"
+4. Reconnect wallet
+
+This fixes nonce cache issues completely.`);
+  };
+
+  // Only show in development
+  if (process.env.NODE_ENV !== "development") return null;
+
+  return (
+    <div
+      style={{ position: "fixed", top: "10px", right: "10px", zIndex: 1000 }}
+    >
+      <button
+        onClick={handleReset}
+        style={{
+          padding: "8px 12px",
+          backgroundColor: "#ff6b6b",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+          fontSize: "12px",
+          cursor: "pointer",
+          fontWeight: "bold",
+          marginBottom: "5px",
+          display: "block",
+          width: "100%",
+        }}
+        title="Click this after restarting Anvil to clear frontend cache"
+      >
+        🔄 Reset Cache
+      </button>
+      <div
+        style={{
+          fontSize: "10px",
+          color: "#666",
+          textAlign: "center",
+          backgroundColor: "rgba(255,255,255,0.9)",
+          padding: "4px",
+          borderRadius: "4px",
+        }}
+      >
+        After cache reset:
+        <br />
+        Reset wallet account too!
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const { isConnected, address } = useAccount();
 
@@ -17,16 +102,22 @@ export default function App() {
     mintNft,
     isPending: isMinting,
     isConfirming: isMintConfirming,
+    isSuccess: isMintSuccess,
+    isReceiptError: isMintReceiptError,
     error: mintError,
-    reset: resetMintError,
+    receiptError: mintReceiptError,
+    reset: resetMint,
   } = useMintKuronje();
 
   const {
     revealToken,
     isPending: isRevealing,
     isConfirming: isRevealConfirming,
+    isSuccess: isRevealSuccess,
+    isReceiptError: isRevealReceiptError,
     error: revealError,
-    reset: resetRevealError,
+    receiptError: revealReceiptError,
+    reset: resetReveal,
   } = useRevealToken();
 
   const { userNFTs, isLoading, balance, refreshAll } =
@@ -40,12 +131,72 @@ export default function App() {
     revealToken(tokenId);
   };
 
+  // Handle successful transactions
+  useEffect(() => {
+    if (isMintSuccess) {
+      console.log("🎉 Mint successful! Refreshing data...");
+      refreshAll();
+      setTimeout(() => {
+        // Reset mint state after a delay to allow user to see success
+        resetMint();
+      }, 2000);
+    }
+  }, [isMintSuccess, refreshAll, resetMint]);
+
+  useEffect(() => {
+    if (isRevealSuccess) {
+      console.log("🎉 Reveal successful! Refreshing data...");
+      refreshAll();
+      setTimeout(() => {
+        // Reset reveal state after a delay
+        resetReveal();
+      }, 2000);
+    }
+  }, [isRevealSuccess, refreshAll, resetReveal]);
+
+  // Handle receipt errors (timeouts, etc.)
+  useEffect(() => {
+    if (isMintReceiptError) {
+      console.log("🚨 Mint receipt error (likely timeout):", mintReceiptError);
+      setTimeout(() => {
+        resetMint();
+      }, 1000);
+    }
+  }, [isMintReceiptError, mintReceiptError, resetMint]);
+
+  useEffect(() => {
+    if (isRevealReceiptError) {
+      console.log(
+        "🚨 Reveal receipt error (likely timeout):",
+        revealReceiptError
+      );
+      setTimeout(() => {
+        resetReveal();
+      }, 1000);
+    }
+  }, [isRevealReceiptError, revealReceiptError, resetReveal]);
+
+  console.log(
+    "isMinting , isMintConfirming , isRevealing , isRevealConfirming: ",
+    isMinting,
+    isMintConfirming,
+    isRevealing,
+    isRevealConfirming
+  );
+
   const isAnyTransactionPending =
     isMinting || isMintConfirming || isRevealing || isRevealConfirming;
-  const hasErrors = mintError || revealError;
+  const hasErrors =
+    mintError || revealError || mintReceiptError || revealReceiptError;
+
+  console.log("isAnyTransactionPending: ", isAnyTransactionPending);
+  console.log("isLoading: ", isLoading);
 
   return (
     <>
+      {/* Development reset button */}
+      <DevResetButton />
+
       {/* Bitcoin background - renders behind everything */}
       <BitcoinCursorFollower />
 
@@ -187,16 +338,39 @@ export default function App() {
                     fontSize: "0.9rem",
                   }}
                 >
-                  {(mintError || revealError)?.message.includes("rejected") ||
-                  (mintError || revealError)?.message.includes("denied")
-                    ? "Transaction was cancelled by user"
-                    : `Transaction failed: ${
-                        (mintError || revealError)?.message
-                      }`}
+                  {(() => {
+                    const errorMessage =
+                      (mintError || revealError)?.message || "";
+
+                    if (
+                      errorMessage.includes("rejected") ||
+                      errorMessage.includes("denied")
+                    ) {
+                      return "Transaction was cancelled by user";
+                    }
+
+                    if (errorMessage.includes("nonce")) {
+                      return "Transaction nonce issue detected. Please wait a moment and try again.";
+                    }
+
+                    if (
+                      errorMessage.includes(
+                        "replacement transaction underpriced"
+                      )
+                    ) {
+                      return "Transaction is being replaced. Please wait for confirmation or try again with higher gas.";
+                    }
+
+                    if (errorMessage.includes("already known")) {
+                      return "This transaction is already pending. Please wait for confirmation.";
+                    }
+
+                    return `Transaction failed: ${errorMessage}`;
+                  })()}
                   <button
                     onClick={() => {
-                      if (mintError) resetMintError();
-                      if (revealError) resetRevealError();
+                      if (mintError) resetMint();
+                      if (revealError) resetReveal();
                     }}
                     style={{
                       marginLeft: "1rem",
