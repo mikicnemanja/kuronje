@@ -1,4 +1,5 @@
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import {
   useMintKuronje,
   useRevealToken,
@@ -10,7 +11,6 @@ import KuronjeCard from "./components/KuronjeCard";
 
 export default function App() {
   const { isConnected, address } = useAccount();
-  const { connect, connectors } = useConnect();
 
   // Custom hooks for contract interactions
   const {
@@ -65,21 +65,27 @@ export default function App() {
           <h1 style={{ color: "white", marginBottom: "2rem" }}>
             Kuronje NFT Collection
           </h1>
-          <button
-            onClick={() => connect({ connector: connectors[0] })}
+
+          <div
             style={{
-              padding: "1rem 2rem",
-              fontSize: "1.2rem",
-              backgroundColor: "white",
-              color: "teal",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "bold",
+              marginBottom: "2rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Connect Wallet
-          </button>
+            <h3
+              style={{
+                color: "white",
+                marginBottom: "1rem",
+                fontSize: "1.1rem",
+              }}
+            >
+              Connect your wallet to get started:
+            </h3>
+            <ConnectButton />
+          </div>
         </div>
       ) : (
         <div
@@ -98,9 +104,25 @@ export default function App() {
               textAlign: "center",
             }}
           >
-            <h1 style={{ color: "white", marginBottom: "2rem" }}>
-              Kuronje NFT Collection
-            </h1>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "2rem",
+                flexWrap: "wrap",
+                gap: "1rem",
+              }}
+            >
+              <h1 style={{ color: "white", margin: 0 }}>
+                Kuronje NFT Collection
+              </h1>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+              >
+                <ConnectButton />
+              </div>
+            </div>
 
             <div style={{ marginBottom: "2rem" }}>
               <button
@@ -200,7 +222,6 @@ export default function App() {
                 fontSize: "1.1rem",
               }}
             >
-              <p>Connected: {address}</p>
               <p>
                 Your NFTs: {userNFTs.length} / Balance: {balance}
               </p>

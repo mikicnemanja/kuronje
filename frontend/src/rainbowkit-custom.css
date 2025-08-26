@@ -1,0 +1,36 @@
+/* Custom styling for RainbowKit ConnectButton to match app theme */
+.rainbow-kit-connect-button {
+  --rk-connect-button-background: white;
+  --rk-connect-button-color: #008080;
+  --rk-connect-button-border-radius: 8px;
+  --rk-connect-button-font-weight: bold;
+  --rk-connect-button-padding: 12px 24px;
+  --rk-connect-button-font-size: 14px;
+}
+
+/* Hover effects */
+.rainbow-kit-connect-button:hover {
+  --rk-connect-button-background: #f0f0f0;
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+/* Account button styling */
+.rainbow-kit-account-button {
+  --rk-account-button-background: rgba(255, 255, 255, 0.1);
+  --rk-account-button-color: white;
+  --rk-account-button-border: 1px solid rgba(255, 255, 255, 0.3);
+  --rk-account-button-border-radius: 8px;
+  --rk-account-button-padding: 8px 16px;
+}
+
+/* Modal styling */
+.rainbow-kit-modal {
+  --rk-modal-background: rgba(0, 0, 0, 0.8);
+}
+
+.rainbow-kit-modal-content {
+  --rk-modal-content-background: #1f2937;
+  --rk-modal-content-border-radius: 12px;
+  --rk-modal-content-border: 1px solid rgba(255, 255, 255, 0.1);
+}
