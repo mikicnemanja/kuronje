@@ -95,7 +95,8 @@ This fixes nonce cache issues completely.`);
 };
 
 export default function App() {
-  const { isConnected, address } = useAccount();
+  const { isConnected, address: addressRaw } = useAccount();
+  const address = addressRaw?.toLowerCase() as `0x${string}`;
 
   // Custom hooks for contract interactions
   const {
@@ -176,21 +177,10 @@ export default function App() {
     }
   }, [isRevealReceiptError, revealReceiptError, resetReveal]);
 
-  console.log(
-    "isMinting , isMintConfirming , isRevealing , isRevealConfirming: ",
-    isMinting,
-    isMintConfirming,
-    isRevealing,
-    isRevealConfirming
-  );
-
   const isAnyTransactionPending =
     isMinting || isMintConfirming || isRevealing || isRevealConfirming;
   const hasErrors =
     mintError || revealError || mintReceiptError || revealReceiptError;
-
-  console.log("isAnyTransactionPending: ", isAnyTransactionPending);
-  console.log("isLoading: ", isLoading);
 
   return (
     <>
@@ -451,15 +441,17 @@ export default function App() {
                   padding: "1rem",
                 }}
               >
-                {userNFTs.map((nft: NFTToken) => (
-                  <KuronjeCard
-                    key={nft.tokenId}
-                    nft={nft}
-                    onReveal={handleReveal}
-                    isRevealing={isRevealing}
-                    isRevealConfirming={isRevealConfirming}
-                  />
-                ))}
+                {userNFTs.map((nft: NFTToken, nftIndex: number) => {
+                  return (
+                    <KuronjeCard
+                      key={`${nft.tokenId}-${nftIndex}`}
+                      nft={nft}
+                      onReveal={handleReveal}
+                      isRevealing={isRevealing}
+                      isRevealConfirming={isRevealConfirming}
+                    />
+                  );
+                })}
               </div>
             )}
           </div>

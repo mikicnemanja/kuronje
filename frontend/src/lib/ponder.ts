@@ -1,7 +1,7 @@
 import { createClient } from "@ponder/client";
 import * as schema from "../../../ponder/ponder.schema";
 
-// Create the Ponder client - update the URL to match your Ponder server
+// Create the Ponder client for SSE-based queries
 const client = createClient("http://localhost:42069/sql", { schema });
 
 // Register schema globally for TypeScript

@@ -14,12 +14,12 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <WagmiProvider config={config}>
-    <QueryClientProvider client={queryClient}>
-      <PonderProvider client={client}>
+    <PonderProvider client={client}>
+      <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           <App />
         </RainbowKitProvider>
-      </PonderProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </PonderProvider>
   </WagmiProvider>
 );

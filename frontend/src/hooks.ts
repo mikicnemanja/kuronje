@@ -6,10 +6,11 @@ import {
 } from "wagmi";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { usePonderQuery } from "@ponder/react";
-import { sql } from "@ponder/client";
+import { eq, sql } from "@ponder/client";
 
 import contractAddressData from "../../contracts/contract-address.json";
 import { KuronjeNFTABI } from "../../contracts/KuronjeNFTABI";
+import { schema } from "./lib/ponder";
 
 const contractAddress = contractAddressData.contractAddress as `0x${string}`;
 
@@ -134,37 +135,7 @@ export const useMintKuronje = () => {
     timeout: 60000, // Increased timeout to 60 seconds
   });
 
-  // Debug: Log mint hook state (remove in production)
-  console.log("🚀 MINT HOOK STATE:", {
-    isPending,
-    isConfirming,
-    isSuccess,
-    isReceiptError,
-    hash,
-    error: error?.message,
-    receiptError: receiptError?.message,
-    walletAddress,
-    isConnected,
-    chainId,
-  });
-
-  // Enhanced debugging for transaction receipt
-  if (hash) {
-    console.log("🚀 Transaction hash exists:", hash);
-    console.log("🚀 isConfirming:", isConfirming);
-    console.log("🚀 isSuccess:", isSuccess);
-    console.log("🚀 isReceiptError:", isReceiptError);
-  } else {
-    console.log("🚀 No transaction hash yet");
-  }
-
-  if (isReceiptError) {
-    console.log("🚀 Receipt error:", receiptError);
-  }
-
   const mintNft = useCallback(() => {
-    console.log("🚀 mintNft called");
-
     // Prevent duplicate transactions
     if (isTransactionInProgressRef.current || isPending || isConfirming) {
       console.log(
@@ -172,13 +143,6 @@ export const useMintKuronje = () => {
       );
       return;
     }
-
-    console.log("🚀 Contract address:", contractAddress);
-    console.log("🚀 writeContract function available:", !!writeContract);
-    console.log("🚀 Wallet connected:", isConnected);
-    console.log("🚀 Wallet address:", walletAddress);
-    console.log("🚀 Chain ID:", chainId);
-    console.log("🚀 Expected chain ID: 31337");
 
     if (!isConnected) {
       console.error("🚀 Wallet not connected!");
@@ -209,13 +173,6 @@ export const useMintKuronje = () => {
     isTransactionInProgressRef.current = true;
 
     try {
-      console.log("🚀 About to call writeContract with:", {
-        address: contractAddress,
-        functionName: "mintNft",
-        walletAddress,
-        chainId,
-      });
-
       writeContract(
         {
           address: contractAddress,
@@ -279,11 +236,6 @@ export const useMintKuronje = () => {
           },
           onError: (error) => {
             console.error("🚀 Mint transaction rejected or failed:", error);
-            console.error("🚀 Error details:", {
-              name: error.name,
-              message: error.message,
-              cause: error.cause,
-            });
             isTransactionInProgressRef.current = false;
           },
         }
@@ -306,10 +258,6 @@ export const useMintKuronje = () => {
   // Reset transaction state when transaction completes or fails
   useEffect(() => {
     if (isSuccess || isReceiptError) {
-      console.log("🚀 Transaction completed, resetting state:", {
-        isSuccess,
-        isReceiptError,
-      });
       isTransactionInProgressRef.current = false;
     }
   }, [isSuccess, isReceiptError]);
@@ -353,9 +301,6 @@ export const useRevealToken = () => {
     (tokenId: number) => {
       // Prevent duplicate transactions
       if (isTransactionInProgressRef.current || isPending || isConfirming) {
-        console.log(
-          "🚀 Reveal transaction already in progress, ignoring duplicate call"
-        );
         return;
       }
 
@@ -386,13 +331,8 @@ export const useRevealToken = () => {
           account: walletAddress,
         },
         {
-          onError: (error) => {
-            console.log("Reveal transaction rejected or failed:", error);
+          onError: () => {
             isTransactionInProgressRef.current = false;
-          },
-          onSuccess: (hash) => {
-            console.log("Reveal transaction submitted successfully:", hash);
-            // Don't reset isTransactionInProgressRef here - wait for confirmation
           },
         }
       );
@@ -403,10 +343,6 @@ export const useRevealToken = () => {
   // Reset transaction state when transaction completes or fails
   useEffect(() => {
     if (isSuccess || isReceiptError) {
-      console.log("🚀 Reveal transaction completed, resetting state:", {
-        isSuccess,
-        isReceiptError,
-      });
       isTransactionInProgressRef.current = false;
     }
   }, [isSuccess, isReceiptError]);
@@ -424,6 +360,16 @@ export const useRevealToken = () => {
   };
 };
 
+interface IPonderToken {
+  id: number;
+  owner: `0x${string}`;
+  metadata_id: number;
+  is_revealed: boolean;
+  revealed_by: `0x${string}`;
+  revealed_at: number;
+  minted_at: number;
+}
+
 // Complex Composite Hook - Using Ponder React Hooks
 export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
   const [userNFTs, setUserNFTs] = useState<NFTToken[]>([]);
@@ -438,7 +384,11 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
     useKuronjeTotalSupply();
 
   // Query user's tokens from Ponder using SQL
-  const tokensQuery = usePonderQuery({
+  const {
+    data: ponderTokens,
+    isLoading: isLoadingPonderTokens,
+    refetch: refetchPonderTokens,
+  } = usePonderQuery({
     queryFn: (db) => {
       if (!userAddress) {
         console.log("🔍 No userAddress, returning empty query");
@@ -450,33 +400,21 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
       return db.execute(sql`
         SELECT id, owner, metadata_id, is_revealed, revealed_by, revealed_at, minted_at
         FROM token 
-        WHERE owner = ${userAddress}
+        WHERE owner = ${userAddress.toLowerCase()}
         ORDER BY id ASC
       `);
     },
     enabled: !!userAddress,
   });
 
-  console.log("🔍 tokensQuery.isLoading:", tokensQuery.isLoading);
-  console.log("🔍 tokensQuery.data:", tokensQuery.data);
-  console.log("🔍 tokensQuery.error:", tokensQuery.error);
-
   // Process tokens and fetch metadata whenever tokens change
   useEffect(() => {
-    console.log("🚀 useEffect STARTED - Latest code version");
-
-    if (!tokensQuery.data || tokensQuery.isLoading) {
-      console.log("🚀 Early return - no data or still loading");
+    if (!ponderTokens || isLoadingPonderTokens) {
       return;
     }
 
-    console.log("=== DEBUG INFO ===");
-    console.log("tokensQuery.data:", tokensQuery.data);
-    console.log("tokensQuery.data type:", typeof tokensQuery.data);
-    console.log("tokensQuery.data is array:", Array.isArray(tokensQuery.data));
-
     // If data is not an array, just set empty array and exit
-    if (!Array.isArray(tokensQuery.data)) {
+    if (!Array.isArray(ponderTokens)) {
       console.log("Data is not an array, setting empty NFTs");
       setUserNFTs([]);
       setIsLoadingMetadata(false);
@@ -488,13 +426,10 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
       const processedTokens: NFTToken[] = [];
 
       // Ensure we have an array to iterate over
-      const tokensArray = Array.isArray(tokensQuery.data)
-        ? tokensQuery.data
-        : [];
-
-      console.log("tokensArray:", tokensArray);
+      const tokensArray = Array.isArray(ponderTokens) ? ponderTokens : [];
 
       for (const token of tokensArray as Record<string, unknown>[]) {
+        console.log("2token", token);
         const tokenId = Number(token.id);
         const isRevealed = Boolean(token.is_revealed);
         const metadataId = Number(token.metadata_id);
@@ -503,9 +438,6 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
         const metadataUri = isRevealed
           ? `ipfs://bafybeie2nvvvfj6yiwqusb72rrqd3xkmbsaqievndlpkttjaihqr7fjetq/${metadataId}.json`
           : `ipfs://bafkreic3oh7lfwipdtic6uk7r22xx2qn6yxi4htvtk2eifm3qwgffgf5wy`;
-
-        console.log(`Token ${tokenId} isRevealed:`, isRevealed);
-        console.log(`Token ${tokenId} metadata URI:`, metadataUri);
 
         // Fetch real metadata from IPFS
         const metadata = await fetchMetadataFromIPFS(metadataUri);
@@ -547,7 +479,6 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
         }
       }
 
-      console.log(`Processed ${processedTokens.length} tokens with metadata`);
       setUserNFTs(processedTokens);
       setIsLoadingMetadata(false);
     };
@@ -557,22 +488,21 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
       setIsLoadingMetadata(false);
       setUserNFTs([]);
     });
-  }, [tokensQuery.data, tokensQuery.isLoading]);
+  }, [ponderTokens, isLoadingPonderTokens]);
 
   // Fallback effect to ensure loading state doesn't get stuck
   useEffect(() => {
-    if (!tokensQuery.isLoading && tokensQuery.data !== undefined) {
+    if (!isLoadingPonderTokens && ponderTokens !== undefined) {
       // If the main effect didn't run for some reason, ensure we're not stuck loading
       const timer = setTimeout(() => {
         if (isLoadingMetadata) {
-          console.log("Fallback: clearing loading state");
           setIsLoadingMetadata(false);
         }
       }, 1000);
 
       return () => clearTimeout(timer);
     }
-  }, [tokensQuery.isLoading, tokensQuery.data, isLoadingMetadata]);
+  }, [isLoadingPonderTokens, ponderTokens, isLoadingMetadata]);
 
   const refreshAll = useCallback(async () => {
     setIsLoadingMetadata(true);
@@ -580,30 +510,21 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
       await Promise.all([
         refetchBalance(),
         refetchTotalSupply(),
-        tokensQuery.refetch(),
+        refetchPonderTokens(),
       ]);
     } catch (error) {
       console.error("Error refreshing data:", error);
     } finally {
       setIsLoadingMetadata(false);
     }
-  }, [refetchBalance, refetchTotalSupply, tokensQuery]);
-
-  console.log(
-    "🔥 LATEST CODE RUNNING - tokensQuery.isLoading: ",
-    tokensQuery.isLoading
-  );
-  console.log(
-    "🔥 LATEST CODE RUNNING - isLoadingMetadata: ",
-    isLoadingMetadata
-  );
+  }, [refetchBalance, refetchTotalSupply, refetchPonderTokens]);
 
   return {
     userNFTs,
-    isLoading: tokensQuery.isLoading || isLoadingMetadata,
+    isLoading: isLoadingPonderTokens || isLoadingMetadata,
     balance: balance ?? 0,
     totalSupply: totalSupply ?? 0,
-    refetch: tokensQuery.refetch,
+    refetch: refetchPonderTokens,
     refreshAll,
   };
 };
