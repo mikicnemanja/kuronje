@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { usePonderQuery } from "@ponder/react";
-import { eq, sql } from "@ponder/client";
+import { eq, sql, asc } from "@ponder/client";
 
 import contractAddressData from "../../contracts/contract-address.json";
 import { KuronjeNFTABI } from "../../contracts/KuronjeNFTABI";
@@ -68,11 +68,6 @@ const fetchMetadataFromIPFS = async (
 export const useKuronjeBalance = (userAddress?: `0x${string}`) => {
   const query = usePonderQuery({
     queryFn: (db) => {
-      if (!userAddress) {
-        // Return a query that results in 0
-        return db.execute(sql`SELECT 0 as token_count`);
-      }
-
       return db.execute(sql`
         SELECT token_count 
         FROM account 
@@ -360,16 +355,6 @@ export const useRevealToken = () => {
   };
 };
 
-interface IPonderToken {
-  id: number;
-  owner: `0x${string}`;
-  metadata_id: number;
-  is_revealed: boolean;
-  revealed_by: `0x${string}`;
-  revealed_at: number;
-  minted_at: number;
-}
-
 // Complex Composite Hook - Using Ponder React Hooks
 export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
   const [userNFTs, setUserNFTs] = useState<NFTToken[]>([]);
@@ -390,19 +375,10 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
     refetch: refetchPonderTokens,
   } = usePonderQuery({
     queryFn: (db) => {
-      if (!userAddress) {
-        console.log("🔍 No userAddress, returning empty query");
-        // Return an empty result query
-        return db.execute(sql`SELECT NULL as id LIMIT 0`);
-      }
-
-      console.log("🔍 Executing token query for address:", userAddress);
-      return db.execute(sql`
-        SELECT id, owner, metadata_id, is_revealed, revealed_by, revealed_at, minted_at
-        FROM token 
-        WHERE owner = ${userAddress.toLowerCase()}
-        ORDER BY id ASC
-      `);
+      return db.query.token.findMany({
+        where: eq(schema.token.owner, userAddress!),
+        orderBy: asc(schema.token.id),
+      });
     },
     enabled: !!userAddress,
   });
@@ -428,11 +404,10 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
       // Ensure we have an array to iterate over
       const tokensArray = Array.isArray(ponderTokens) ? ponderTokens : [];
 
-      for (const token of tokensArray as Record<string, unknown>[]) {
-        console.log("2token", token);
+      for (const token of tokensArray) {
         const tokenId = Number(token.id);
-        const isRevealed = Boolean(token.is_revealed);
-        const metadataId = Number(token.metadata_id);
+        const isRevealed = Boolean(token.isRevealed);
+        const metadataId = Number(token.metadataId);
 
         // Generate metadata URI based on revealed status using actual contract URIs
         const metadataUri = isRevealed
@@ -453,7 +428,7 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
           // Fallback to placeholder if IPFS fetch fails
           const fallbackMetadata: NFTMetadata = {
             name: isRevealed
-              ? `Kuronje #${tokenId} - Revealed`
+              ? `Kuronje #${metadataId} - Revealed`
               : "Kuronje Mystery Box",
             description: isRevealed
               ? "A revealed Kuronje NFT"
@@ -467,7 +442,7 @@ export const useUserKuronjeNFTs = (userAddress?: `0x${string}`) => {
                 value: isRevealed ? "Revealed" : "Unrevealed",
               },
               { trait_type: "Token ID", value: tokenId.toString() },
-              { trait_type: "Metadat a ID", value: metadataId.toString() },
+              { trait_type: "Metadata ID", value: metadataId.toString() },
             ],
           };
 
